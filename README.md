@@ -1,1 +1,1 @@
-"# kotlin-junit5-github_action" 
+[![Build](https://github.com/PhanMinhTuanAnh/kotlin-junit5-github_action/actions/workflows/build.yml/badge.svg?branch=main)](https://github.com/PhanMinhTuanAnh/kotlin-junit5-github_action/actions/workflows/build.yml)
