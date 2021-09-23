@@ -17,4 +17,14 @@ class BankTest {
         // ## Assert ##
         assertThat(bank.accountNumber).isEqualTo(expect)
     }
+
+    @Test
+    fun fail() {
+        // ## Arrange ##
+        val test = ""
+        val expect = "test0123"
+
+        // ## Assert ##
+        assertThat(test).isEqualTo(expect)
+    }
 }
