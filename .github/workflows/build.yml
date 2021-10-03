@@ -34,36 +34,33 @@ jobs:
       - name: Build with Gradle
         run: ./gradlew build
 
+  docker:
+    runs-on: ubuntu-latest
 
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
 
+      - name: Login Docker Hub
+        uses: docker/login-action@v1
+        with:
+          username: ${{ secrets.DOCKERHUB_USERNAME }}
+          password: ${{ secrets.DOCKERHUB_ACCESS_TOKEN }}
 
-#  docker:
-#    runs-on: ubuntu-latest
-#
-#    steps:
-#      - name: Checkout
-#        uses: actions/checkout@v2
-#
-#      - name: Login Docker Hub
-#        uses: docker/login-action@v1
-#        with:
-#          username: ${{ secrets.DOCKERHUB_USERNAME }}
-#          password: ${{ secrets.DOCKERHUB_ACCESS_TOKEN }}
-#
-#      - name: Setup Docker Buildx
-#        uses: docker/setup-buildx-action@v1
-#        # gan' output vao id buildx
-#        id: buildx
-#
-#      - name: Build and Push Docker Image
-#        uses: docker/build-push-action@v2
-#        id: docker_build
-#        with:
-#          context: ./
-##          file: ./Dockerfile
-#          builder: ${{ steps.buildx.outputs.name }}
-#          push: true
-#          tags: ${{ secrets.DOCKERHUB_USERNAME }}/spring-junit5-githubaction
-#
-#      - name: Verify
-#        run: echo ${{ steps.docker_build.outputs.digest }}
+      - name: Setup Docker Buildx
+        # gan' output vao id buildx
+        id: buildx
+        uses: docker/setup-buildx-action@v1
+
+      - name: Build and Push Docker Image
+        id: docker_build
+        uses: docker/build-push-action@v2
+        with:
+          context: ./
+          file: ./Dockerfile
+          builder: ${{ steps.buildx.outputs.name }}
+          push: true
+          tags: ${{ secrets.DOCKERHUB_USERNAME }}/spring-junit5-githubaction
+
+      - name: Verify
+        run: echo ${{ steps.docker_build.outputs.digest }}
