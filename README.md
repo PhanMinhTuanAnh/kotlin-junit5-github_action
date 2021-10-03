@@ -4,7 +4,7 @@
 - Slack: 
   - Channelを作成
   - Repoをsubscribe
-  - どのお知らせを受けたいか、選ぶ
+  - どのお知らせを受けたいか、選択
     
 # Run App
 - Docker:
