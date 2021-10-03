@@ -8,8 +8,8 @@
     
 # Run App
 - Docker:
-  - Build tag: `docker build -t tagname .` (run w Dockerfile)
-  - Run tag: `docker run -p 8080:8080 tagname`
+  - Build image: `docker build -t tagname .` (run w Dockerfile)
+  - Run container: `docker run -p 8080:8080 tagname` (add -d to detach)
 - Local: http://localhost:8080/api/hello
 
     
