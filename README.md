@@ -19,4 +19,5 @@
   - Remove image: `docker rm image [image_id]/[tagname]`
 - Local Access: http://localhost:8080/api/hello
 
-    
+# Test
+- Command: `gradlew test`
