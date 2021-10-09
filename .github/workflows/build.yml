@@ -92,6 +92,6 @@ jobs:
 
       - name: Build the hello-world Docker image
         run: |
-          docker build . --tag ghcr.io/PhanMinhTuanAnh/kotlin-junit5-github_action:latest
-          docker run ghcr.io/PhanMinhTuanAnh/kotlin-junit5-github_action:latest
-          docker push ghcr.io/PhanMinhTuanAnh/kotlin-junit5-github_action:latest
+          docker build . --tag ghcr.io/phanminhtuananh/kotlin-junit5-github_action:latest
+          docker run ghcr.io/phanminhtuananh/kotlin-junit5-github_action:latest
+          docker push ghcr.io/phanminhtuananh/kotlin-junit5-github_action:latest
