@@ -10,6 +10,6 @@ class HelloWorldController {
 
     @GetMapping
     fun helloWorld(): String {
-        return "Hello, this is a REST endpoint!!"
+        return "Hello Sensei, this is a REST endpoint!!"
     }
 }
