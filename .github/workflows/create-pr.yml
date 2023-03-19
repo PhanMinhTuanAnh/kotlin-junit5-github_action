@@ -14,7 +14,7 @@ jobs:
           script: |
             const { repo, owner } = context.repo;
             const result = await github.rest.pulls.create({
-              title: '[Example] Simple demo',
+              title: 'Pull Request Action',
               owner,
               repo,
               head: '${{ github.ref_name }}',
