@@ -30,3 +30,30 @@ jobs:
               issue_number: result.data.number,
               labels: ['feature', 'automated pr']
             });
+            const targetBranches = JSON.parse(TARGET_BRANCHES)
+            const attachProject = (await github.rest.projects.listForRepo({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+            })).data.find(it => it.name === 'anh github action project')
+            const attachColumn = (await github.rest.projects.listColumns({
+              project_id: attachProject.id,
+            })).data.find(it => it.name === 'In Progress')
+
+#            await Promise.all(
+#              targetBranches.map(async (br) => {
+#                const pr = await github.rest.pulls.create({
+#                    owner: context.repo.owner,
+#                    repo: context.repo.repo,
+#                    title: `Backport of "${br}" ⇐ "${HEAD_REF}"`,
+#                    body: `Backport from "${HEAD_REF}" to "${br}".`,
+#                    head: `backport/${HEAD_REF}/to/${br}`,
+#                    base: br,
+#                });
+#                // Attach PR into project board column.
+#                await github.rest.projects.createCard({
+#                    column_id: attachColumn.id,
+#                    content_id: pr.data.id,
+#                    content_type: 'PullRequest',
+#                })
+#              })
+#            )
