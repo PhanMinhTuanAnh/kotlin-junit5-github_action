@@ -13,8 +13,25 @@ jobs:
         with:
           script: |
             const { repo, owner } = context.repo;
+            const projectName = "anh github action project";
+            const columnName = "In Progress";
+            const attachProject = (await github.rest.projects.listForRepo({
+              owner: owner,
+              repo: repo,
+            })).data.filter(it => it.name === projectName);
+            if (attachProject.length === 0) {
+              core.setFailed("Unable to find a project named " + projectName);
+              return;
+            }
+            const attachColumn = (await github.rest.projects.listColumns({
+              project_id: attachProject[0].id,
+            })).data.filter(it => it.name === columnName);
+            if (attachColumn.length === 0) {
+              core.setFailed("Unable to find a column named " + columnName);
+              return;
+            }
             const result = await github.rest.pulls.create({
-              title: '[Example] Simple demo',
+              title: 'Pull Request Action',
               owner,
               repo,
               head: '${{ github.ref_name }}',
@@ -30,3 +47,22 @@ jobs:
               issue_number: result.data.number,
               labels: ['feature', 'automated pr']
             });
+#            const targetBranches = JSON.parse(TARGET_BRANCHES)
+#            await Promise.all(
+#              targetBranches.map(async (br) => {
+#                const pr = await github.rest.pulls.create({
+#                    owner: context.repo.owner,
+#                    repo: context.repo.repo,
+#                    title: `Backport of "${br}" ⇐ "${HEAD_REF}"`,
+#                    body: `Backport from "${HEAD_REF}" to "${br}".`,
+#                    head: `backport/${HEAD_REF}/to/${br}`,
+#                    base: br,
+#                });
+#                // Attach PR into project board column.
+#                await github.rest.projects.createCard({
+#                    column_id: attachColumn.id,
+#                    content_id: pr.data.id,
+#                    content_type: 'PullRequest',
+#                })
+#              })
+#            )
