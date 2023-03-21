@@ -41,7 +41,8 @@ jobs:
               issue_number: result.data.number,
               labels: ['feature', 'automated pr']
             });
-            echo "$result.data.id"
+            return deployment.data.id.toString();
+          result-encoding: string
 
       - name: Get project data
         env:
@@ -81,7 +82,7 @@ jobs:
       - name: Add PR to project
         env:
           GITHUB_TOKEN: ${{ secrets.MY_TOKEN }}
-#          PR_ID: ${{ github.event.pull_request.node_id }}
+          PR_ID: ${{ steps.create-pr.outputs.result }}
         run: |
           item_id="$( gh api graphql -f query='
             mutation($project:ID!, $pr:ID!) {
