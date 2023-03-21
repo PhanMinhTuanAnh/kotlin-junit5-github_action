@@ -84,7 +84,6 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.MY_TOKEN }}
           PR_ID: ${{ steps.create-pr.outputs.result }}
         run: |
-          pr_id=Number($PR_ID)
           item_id="$( gh api graphql -f query='
             mutation($project:ID!, $pr:ID!) {
               addProjectV2ItemById(input: {projectId: $project, contentId: $pr}) {
@@ -92,7 +91,7 @@ jobs:
                   id
                 }
               }
-            }' -f project=$PROJECT_ID -f pr=pr_id --jq '.data.addProjectV2ItemById.item.id')"
+            }' -f project=$PROJECT_ID -f pr=$PR_ID --jq '.data.addProjectV2ItemById.item.id')"
           
             echo 'ITEM_ID='$item_id >> $GITHUB_ENV
 
