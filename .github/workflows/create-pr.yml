@@ -41,7 +41,7 @@ jobs:
               issue_number: result.data.number,
               labels: ['feature', 'automated pr']
             });
-            return result.data.id.toString();
+            return result.data.node_id.toString();
           result-encoding: string
 
       - name: Get project data
