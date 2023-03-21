@@ -3,15 +3,10 @@ name: Pull Request Action
 on:
   workflow_dispatch:
     inputs:
-      logLevel:
-        description: 'Log level'
+      pr_title:
+        description: 'PR Title'
         required: true
-        default: 'warning'
-        type: choice
-        options:
-          - info
-          - warning
-          - debug
+        type: string
 
 jobs:
   create-pull-request:
@@ -20,11 +15,14 @@ jobs:
       - name: Create Pull Request
         id: create-pr
         uses: actions/github-script@v6
+        env:
+          PR_TITLE: ${{ inputs.pr_title }}
         with:
           script: |
             const { repo, owner } = context.repo;
+            const { PR_TITLE } = process.env
             const result = await github.rest.pulls.create({
-              title: 'Pull Request Action',
+              title: ${PR_TITLE},
               owner,
               repo,
               head: 'main',
