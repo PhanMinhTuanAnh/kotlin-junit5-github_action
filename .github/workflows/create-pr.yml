@@ -22,7 +22,7 @@ jobs:
             const { repo, owner } = context.repo;
             const { PR_TITLE } = process.env
             const result = await github.rest.pulls.create({
-              title: ${PR_TITLE},
+              title: `${PR_TITLE}`,
               owner,
               repo,
               head: 'main',
