@@ -18,6 +18,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Create Pull Request
+        id: create-pr
         uses: actions/github-script@v6
         with:
           script: |
@@ -40,7 +41,8 @@ jobs:
               issue_number: result.data.number,
               labels: ['feature', 'automated pr']
             });
-            echo 'PR_ID='$result.data.id >> $GITHUB_ENV
+            echo "$result.data.id"
+
       - name: Get project data
         env:
           GITHUB_TOKEN: ${{ secrets.MY_TOKEN }}
