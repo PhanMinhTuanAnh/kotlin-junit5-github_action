@@ -12,4 +12,8 @@ class HelloWorldController {
     fun helloWorld(): String {
         return "Hello, this is a REST endpoint!!"
     }
+
+    fun test(): String {
+        return "YO!"
+    }
 }
