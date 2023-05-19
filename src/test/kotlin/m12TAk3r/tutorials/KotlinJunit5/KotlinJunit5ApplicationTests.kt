@@ -8,6 +8,7 @@ class KotlinJunit5ApplicationTests {
 
 	@Test
 	fun contextLoads() {
+		// test test
 	}
 
 }
