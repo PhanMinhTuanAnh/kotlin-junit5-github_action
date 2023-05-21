@@ -14,6 +14,6 @@ class HelloWorldController {
     }
 
     fun test(): String {
-        return "YOYOYO!"
+        return "YOYOYOaa!"
     }
 }

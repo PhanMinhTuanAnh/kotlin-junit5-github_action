@@ -27,7 +27,7 @@ jobs:
         id: changed-files
         uses: tj-actions/changed-files@v35
         with:
-          since_last_remote_commit: true
+          files: *.kt
 
         # To compare changes between the current commit and the last pushed remote commit set `since_last_remote_commit: true`. e.g
         # with:
@@ -35,7 +35,7 @@ jobs:
 
       - name: List all changed files
         run: |
-          echo $($(${{ steps.changed-files.outputs.all_changed_files }} | cut -d "/" -f -2 | sed 'N;s/\n/,/')
+          echo $(${{ steps.changed-files.outputs.all_changed_files }} | cut -d "/" -f -2 | sed 'N;s/\n/,/')
           for file in ${{ steps.changed-files.outputs.all_changed_files }}; do
             echo "$file was changed"
           done
