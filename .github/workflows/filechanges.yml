@@ -58,6 +58,8 @@ jobs:
       - name: List all changed files
         id: extract_list_files
         run: |
+          echo 'AAAA2' > test2.txt
+          echo 'XXXX2' > test2.md
           echo "::set-output name=listfiles::$(echo $(git status --porcelain | sed s/^...//))"
           
 
