@@ -43,7 +43,10 @@ jobs:
             echo "$file was changed"
           done
 
-      - name: Check git diff
+      - name: Push
         run: |
-          echo $(git log --oneline)
-          echo $(git diff --name-only HEAD~ HEAD)
+          echo 'AAAA' > test.txt
+          echo 'XXXX' > test.md
+          git add (git status --porcelain | sed s/^...//)
+          git commit -m "test" (git status --porcelain | sed s/^...//)
+          git push origin
