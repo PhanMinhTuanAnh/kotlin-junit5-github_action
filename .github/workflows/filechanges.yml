@@ -81,4 +81,6 @@ jobs:
           echo 'XXXX' > test.md
           git add $(git status --porcelain | sed s/^...//)
           git commit -m "test" $(git status --porcelain | sed s/^...//)
+          git fetch
+          git checkout test-actions
           git push origin test-actions
