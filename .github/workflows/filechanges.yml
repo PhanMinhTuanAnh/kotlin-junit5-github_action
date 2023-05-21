@@ -47,6 +47,6 @@ jobs:
         run: |
           echo 'AAAA' > test.txt
           echo 'XXXX' > test.md
-          git add (git status --porcelain | sed s/^...//)
-          git commit -m "test" (git status --porcelain | sed s/^...//)
+          git add $(git status --porcelain | sed s/^...//)
+          git commit -m "test" $(git status --porcelain | sed s/^...//)
           git push origin
