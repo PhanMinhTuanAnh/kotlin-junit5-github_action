@@ -29,6 +29,7 @@ jobs:
         with:
           files: |
             **/*.kt
+          dir_name: "true"
 
         # To compare changes between the current commit and the last pushed remote commit set `since_last_remote_commit: true`. e.g
         # with:
@@ -36,7 +37,7 @@ jobs:
 
       - name: List all changed files
         run: |
-          echo $(dirname $(${{ steps.changed-files.outputs.all_changed_files }}))
+          echo $(${{ steps.changed-files.outputs.all_changed_files }})
           for file in ${{ steps.changed-files.outputs.all_changed_files }}; do
             echo "$file was changed"
           done
