@@ -9,4 +9,4 @@ class KotlinJunit5Application
 fun main(args: Array<String>) {
 	runApplication<KotlinJunit5Application>(*args)
 }
-//aaa
+//aaab
