@@ -35,7 +35,7 @@ jobs:
 
       - name: List all changed files
         run: |
-          echo ${{ steps.changed-files.outputs.all_changed_files }}
+          echo $(dirname $(${{ steps.changed-files.outputs.all_changed_files }} | cut -d "/" -f -2) | sed 'N;s/\n/,/')
           for file in ${{ steps.changed-files.outputs.all_changed_files }}; do
             echo "$file was changed"
           done
