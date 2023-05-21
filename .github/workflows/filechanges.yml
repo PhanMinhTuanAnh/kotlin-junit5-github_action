@@ -56,7 +56,7 @@ jobs:
 
       - name: Push
         run: |
-          git branch
+          echo $(git branch)
 #          git config --global user.email github-actions@github.com
 #          git config --global user.name github-actions
 #          echo 'AAAA' > test.txt
