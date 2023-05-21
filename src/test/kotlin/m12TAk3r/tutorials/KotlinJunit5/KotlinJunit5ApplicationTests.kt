@@ -12,6 +12,6 @@ class KotlinJunit5ApplicationTests {
 
 	@Test
 	fun test() {
-
+		// test
 	}
 }
