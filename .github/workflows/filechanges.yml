@@ -30,6 +30,7 @@ jobs:
           files: |
             **/*.kt
           dir_names: "true"
+          separator: ","
 
         # To compare changes between the current commit and the last pushed remote commit set `since_last_remote_commit: true`. e.g
         # with:
