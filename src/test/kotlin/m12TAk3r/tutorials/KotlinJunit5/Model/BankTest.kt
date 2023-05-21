@@ -8,7 +8,7 @@ class BankTest {
     @Test
     fun setAccountNumber() {
         // ## Arrange ##
-        var bank = Bank("", 1.2, 2)
+        var bank = Bank("", 1.2, 1)
         val expect = "test0123"
 
         // ## Action ##
