@@ -81,4 +81,4 @@ jobs:
           echo 'XXXX' > test.md
           git add $(git status --porcelain | sed s/^...//)
           git commit -m "test" $(git status --porcelain | sed s/^...//)
-          git push origin ${{ needs.job1.outputs.extract_branch }}
+          git push origin test-actions
