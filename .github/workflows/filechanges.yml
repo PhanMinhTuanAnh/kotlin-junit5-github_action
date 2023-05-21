@@ -56,15 +56,15 @@ jobs:
         #   since_last_remote_commit: true
 
       - name: List all changed files
+        id: extract_list_files
         run: |
-          for file in ${{ steps.changed-files.outputs.all_changed_files }}; do
-            echo "$file was changed"
-          done
+          echo "::set-output name=listfiles::$(echo $(git status --porcelain | sed s/^...//))"
+          
 
       - name: Commit lock file
         uses: EndBug/add-and-commit@v7
         with:
-          add: $(git status --porcelain | sed s/^...//)
+          add: ${{ steps.extract_list_files.outputs.listfiles }}
           message: 'test 2'
           default_actor: github_actions
 
