@@ -77,11 +77,11 @@ jobs:
           echo $(git branch)
           git config --global user.email github-actions@github.com
           git config --global user.name github-actions
+          git fetch
+          git checkout test-actions
           echo 'AAAA' > test.txt
           echo 'XXXX' > test.
           echo $(git status --porcelain | sed s/^...//)
           git add $(git status --porcelain | sed s/^...//)
           git commit -m "test" $(git status --porcelain | sed s/^...//)
-          git fetch
-          git checkout test-actions
           git push origin test-actions
