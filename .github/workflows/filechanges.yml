@@ -28,7 +28,7 @@ jobs:
         uses: tj-actions/changed-files@v35
         with:
           since_last_remote_commit: true
-          files: *.kt
+          files: '*.kt'
 
         # To compare changes between the current commit and the last pushed remote commit set `since_last_remote_commit: true`. e.g
         # with:
