@@ -4,11 +4,12 @@ on:
   pull_request:
     types: [closed, opened]
     branches:
-      - main
+      - 'main'
 
 jobs:
   hello-world:
     runs-on: ubuntu-latest
+    environment: dev
     steps:
       - name: Create Pull Request
         id: create-pr
