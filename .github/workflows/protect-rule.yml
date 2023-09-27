@@ -1,8 +1,7 @@
 name: Pull Request Action
 
 on:
-  pull_request:
-    types: [closed, opened]
+  push:
     branches:
       - 'main'
 
