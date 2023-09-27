@@ -1,0 +1,100 @@
+name: list file changes
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+
+# -------------------------------------------------------------------------------------------------------------------------
+# Event `push`: Compare the preceeding commit -> to the current commit of the main branch.
+# Event `pull_request`: Compare the last commit of main -> to the current commit of a Pull Request branch.
+# -------------------------------------------------------------------------------------------------------------------------
+
+jobs:
+  job1:
+    name: Get working branch
+    runs-on: [ ubuntu-latest ]
+    outputs:
+      extract_branch: ${{ steps.extract_branch.outputs.branch }}
+    steps:
+      - name: Branch used
+        id: extract_branch
+        run: |
+          if [[ "${GITHUB_EVENT_NAME}" == "push" ]]; then
+            echo "::set-output name=branch::$(echo ${GITHUB_REF##*/})"
+          elif [[ "${GITHUB_EVENT_NAME}" == "pull_request" ]]; then
+            echo "::set-output name=branch::$(echo $GITHUB_BASE_REF)"
+          else
+            echo "::set-output name=branch::INVALID_EVENT_BRANCH_UNKNOWN"
+          fi
+
+  build:
+    needs: job1
+    runs-on: ubuntu-latest  # windows-latest | macos-latest
+    env:
+      GITHUB_TOKEN: ${{ secrets.MY_TOKEN }}
+    name: Test changed-files
+    steps:
+      - uses: actions/checkout@v3
+        with:
+          fetch-depth: 0 # OR "2" -> To retrieve the preceding commit.
+
+      # Example 1
+      - name: Get changed files
+        id: changed-files
+        uses: tj-actions/changed-files@v35
+        with:
+          since_last_remote_commit: true
+          files: |
+            **/*.kt
+          dir_names: "true"
+          separator: ","
+
+        # To compare changes between the current commit and the last pushed remote commit set `since_last_remote_commit: true`. e.g
+        # with:
+        #   since_last_remote_commit: true
+
+      - name: List all changed files
+        id: extract_list_files
+        run: |
+          echo 'AAAA2' > test2.txt
+          echo 'XXXX2' > test2.md
+          echo "::set-output name=listfiles::$(echo $(git status --porcelain | sed s/^...//))"
+          
+
+      - name: Commit lock file
+        uses: EndBug/add-and-commit@v7
+        env:
+          GITHUB_TOKEN: ${{ secrets.MY_TOKEN }}
+        with:
+          add: ${{ steps.extract_list_files.outputs.listfiles }}
+          message: 'test 2'
+          default_actor: github_actions
+
+#      - name: Branch used
+#        id: extract_branch
+#        run: |
+#          if [[ "${GITHUB_EVENT_NAME}" == "push" ]]; then
+#            echo "::set-output name=branch::$(echo ${GITHUB_REF##*/})"
+#          elif [[ "${GITHUB_EVENT_NAME}" == "pull_request" ]]; then
+#            echo "::set-output name=branch::$(echo $GITHUB_BASE_REF)"
+#          else
+#            echo "::set-output name=branch::INVALID_EVENT_BRANCH_UNKNOWN"
+#          fi
+#
+#      - name: Push
+#        run: |
+#          echo $(git branch)
+#          git config --global user.email github-actions@github.com
+#          git config --global user.name github-actions
+#          git fetch
+#          git checkout test-actions
+#          echo 'AAAA' > test.txt
+#          echo 'XXXX' > test.
+#          echo $(git status --porcelain | sed s/^...//)
+#          git add $(git status --porcelain | sed s/^...//)
+#          git commit -m "test" $(git status --porcelain | sed s/^...//)
+#          git push origin test-actions
